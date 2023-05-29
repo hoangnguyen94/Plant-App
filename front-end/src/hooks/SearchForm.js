@@ -1,63 +1,54 @@
+//SearchForm Component
 import SearchIcon from '@mui/icons-material/Search';
-
 import { Typography } from '@mui/material';
-import { useHistory } from "react-router-dom";
-import { useState, useEffect } from 'react';
-
+import { useHistory } from 'react-router-dom';
+import { v4 as uuid } from "uuid";
 import usePlantData from './usePlantData';
-
-import * as React from 'react';
+import React, {useState} from 'react';
 import { TextField, Stack, Autocomplete } from '@mui/material';
 
-function SearchForm() {
+const SearchForm = () => {
   const history = useHistory();
+  const { searchPlant } = usePlantData();
 
-  const { getPlantsArray } = usePlantData();
-
-  const [ plants, setPlants ] = useState([])
-
-  useEffect(() => {
-    getPlantsArray().then((res) => {
-      const plantsArray = Array.isArray(res.data) ? res.data : [];
-      setPlants(plantsArray);
-    });
-  }, [] );
-  
-  const [inputValue, setInputValue] = useState("");
+  const [ plants, setPlants ] = useState( [] );
+  const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
 
   const handleOnSubmit = (name) => {
-    console.log(`name: ${name}`)
-    history.push( `/plants/${name}` );
-    setOpen( false );
-    setInputValue( "" );
-
-  }
-  
-  // const filteredOptions = plants.filter((option) =>
-  //   option.name.toLowerCase().includes(inputValue.toLowerCase())
-  // );
-
-  const handleInputChange = (e, value, reason) => {
-    setInputValue( value );
-    console.log( `value: ${value}` );
-
-    // only open when inputValue is not empty after the user typed something
-    setOpen(!!value);
+    console.log(`name:${name}`);
+    history.push(`/plants?name=${name}`);
+    setOpen(false);
+    setInputValue( '' );
   };
 
-  // const handleOptionClick = (option) => {
-  //   handleOnSubmit( option.name );
-  //   console.log(`option: ${option}`)
-  // };
+  const handleInputChange = async ( e, name, reason ) =>
+  {
+    setInputValue( name );
+    const results = await searchPlant( name );
+    
+    const plantsArray = Array.isArray( results ) ? results : [ results ];
+    const extractedPlants = plantsArray[ 0 ] && plantsArray[ 0 ].plants ? plantsArray[ 0 ].plants : [];
+    let plantsWithId = extractedPlants.map((plant) => {
+      return { ...plant, id: uuid() };
+    });
+    setPlants( plantsWithId );
+    console.log( plantsWithId );
+    setOpen( !!name );
+  };
+
+  const filteredOptions = plants.filter(
+    (option) =>
+      option.name && option.name.toLowerCase().includes(inputValue.toLowerCase())
+  );
   
+
   return (
-    <Stack sx={{padding: 2, width: { xs: 200, sm: 400, md: 570}}}>
+    <Stack sx={{ padding: 2, width: { xs: 200, sm: 400, md: 570 } }}>
       <Autocomplete
         clearOnBlur
         open={open}
         onOpen={() => {
-          // only open when in focus and inputValue is not empty
           if (inputValue) {
             setOpen(true);
           }
@@ -65,32 +56,32 @@ function SearchForm() {
         onClose={() => setOpen(false)}
         inputValue={inputValue}
         onInputChange={handleInputChange}
-  
         popupIcon={<SearchIcon />}
         noOptionsText="We can't find your plant."
         getOptionLabel={(option) => `${option.name} ${option.sci_name}`}
-        options={plants}
-        renderInput={(params) => (
-          <TextField {...params} placeholder="Search..." />
-        )}
+        options={filteredOptions}
+        renderInput={(params) => <TextField {...params} placeholder="Search..." />}
         renderOption={(props, option) => {
           return (
-            <li {...props} key={option.id} onClick={() => handleOnSubmit(option.id)}>
-                <Typography>
-                  {option.name} -
-                </Typography>
-
-                <Typography variant="subtitle2" sx={{ color: "text.secondary" }}> <i>{option.sci_name}</i></Typography>
-
-
-
+            <li
+              {...props}
+              key={option.id}
+              onClick={() => {
+                handleOnSubmit(option.name)
+              }}
+            >
+              <Typography>
+                {option.name} -
+              </Typography>
+              <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                <i>{option.sci_name}</i>
+              </Typography>
             </li>
-          )
+          );
         }}
       />
     </Stack>
   );
-}
+};
 
 export default SearchForm;
-        
