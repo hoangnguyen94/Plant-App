@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 import usePlantData from './usePlantData';
 import React, { useState } from 'react';
 import { TextField, Stack, Autocomplete } from '@mui/material';
-
+import './SearchForm.css';
 const SearchForm = ({setSelectedPlantData}) => {
   const history = useHistory();
   const { searchPlant } = usePlantData();
