@@ -31,6 +31,8 @@ function App() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  
+  const [ selectedPlantData, setSelectedPlantData ] = useState( null );
 
   console.debug(
       "App",
@@ -115,8 +117,13 @@ function App() {
         <UserContext.Provider
             value={{ currentUser, setCurrentUser }}>
           <div className="App">
-            <Navigation logout={logout} />
-            <Routes login={login} signup={signup} />
+            <Navigation
+              logout={logout}
+              setSelectedPlantData={setSelectedPlantData} />
+            <Routes
+              login={login}
+              signup={signup}
+              selectedPlantData={selectedPlantData} />
           </div>
         </UserContext.Provider>
       </BrowserRouter>

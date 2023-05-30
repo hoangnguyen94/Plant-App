@@ -6,7 +6,8 @@ function usePlantData() {
   const getPlantsArray = async () =>
   {
     console.log("get all plants")
-    const data = await axios.get( "//localhost:3001/plants" );
+    const response = await axios.get( "//localhost:3001/plants" );
+    const data = response.data;
     console.log( data );
     return data;
   }
@@ -18,6 +19,13 @@ function usePlantData() {
     return data;
   }
 
-  return { getPlantData, getPlantsArray };
+  const searchPlant = async ( value ) =>
+  {
+    const response = await axios.get( `//localhost:3001/plants?name=${value}` )
+    const data = response.data;
+    return data
+  }
+  return { getPlantData, getPlantsArray, searchPlant };
 }
+
 export default usePlantData;

@@ -1,75 +1,49 @@
 import React from "react";
-import { Container, Box, Typography, StepConnector } from "@mui/material";
-
+import { Container, Typography, Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faHorse, faCat, faDog } from "@fortawesome/free-solid-svg-icons";
 
-function Toxicity ( { toxicities } )
-{
-
-  if (toxicities.filter(e => e.toxic === true).length > 0) {
-    return (
-      <Container>
-        <Container align="center">
-
-          <Typography paddingTop={5} variant="h4" margin={2} sx={{ textAlign: "center" }}>
-              Animal Toxicity
-          </Typography>
-
-          <Typography
-            variant="subtitle2"
-            margin={2}
-            sx={{ textAlign: "center", color: "text.secondary" }}
-          >
-            <i>It may be dangerous to the animals<br/>displayed below if consumed: </i>
-          </Typography>
-
-          <Box sx={{ flexDirection: "row", padding: 3}} align="center">
-            <Typography component={'span'} variant="h1" sx={{ textAlign: "center" }}>
-
-
-              {toxicities.map((obj, index) => {
-
-                if (obj.animal === "horse" && obj.toxic === true) return (
-                    <FontAwesomeIcon icon={faHorse} key={index} />)
-
-                else if (obj.animal === "cat" && obj.toxic === true ) return (
-                    <FontAwesomeIcon icon={faCat} key={index} />)
-
-                else if (obj.animal === "dog" && obj.toxic === true) return (
-                    <FontAwesomeIcon icon={faDog} key={index} /> )
-                return null; // Add a fallback return statement
-              })}
-            </Typography>
-          </Box>
-
-          <Box mb={5} />
-
-        </Container>
-      <Container>
-        <StepConnector />
-          <Typography variant="body1" paddingTop={3} sx={{ color: "text.secondary" }}>
-            Clinical signs: </Typography>
-          <Typography variant="body1" paddingBottom={4}>
-
-            { toxicities[0].clinical_signs }
-
-          </Typography>
-
-      </Container>
-
-
-
-    </Container>
-
-    )
-  }
-
+const Toxicity = ({ selectedPlantData }) => {
+  const {
+    animals,
+    clinical_signs,
+  } = selectedPlantData;
+  console.log( animals );
+  const toxicities = animals.filter((animal) => animal.toxic === true);
+  console.log( toxicities );
   return (
-  <Container sx={{ display: 'flex' }}>
-  </Container>
-  )
-}
+    <Container align="center">
+      <Typography paddingTop={5} variant="h4" margin={2} sx={{ textAlign: "center" }}>
+        Animal Toxicity
+      </Typography>
+      <Typography variant="subtitle2" margin={2} sx={{ textAlign: "center", color: "text.secondary" }}>
+        <i>It may be dangerous to the animals displayed below if consumed: </i>
+      </Typography>
+      <Box sx={{ flexDirection: "row", padding: 3 }} align="center">
+        <Typography component={"span"} variant="h1" sx={{ textAlign: "center" }}>
+          {toxicities.map((obj, index) => {
+            if (obj.animal === "horse" && obj.toxic === true)
+              return <FontAwesomeIcon icon={faHorse} key={index} />;
+            else if (obj.animal === "cat" && obj.toxic === true)
+              return <FontAwesomeIcon icon={faCat} key={index} />;
+            else if (obj.animal === "dog" && obj.toxic === true)
+              return <FontAwesomeIcon icon={faDog} key={index} />;
+            return null; // Add a fallback return statement
+          })}
+        </Typography>
+      </Box>
+      <Box mb={5} />
+
+      <Container>
+        <Typography variant="body1" paddingTop={3} sx={{ color: "text.secondary" }}>
+          Clinical signs:
+        </Typography>
+        <Typography variant="body1" paddingBottom={4}>
+          {clinical_signs}
+        </Typography>
+      </Container>
+    </Container>
+  );
+};
 
 export default Toxicity;

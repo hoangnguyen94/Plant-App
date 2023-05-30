@@ -1,47 +1,43 @@
-//SearchForm Component
 import SearchIcon from '@mui/icons-material/Search';
 import { Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 import usePlantData from './usePlantData';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { TextField, Stack, Autocomplete } from '@mui/material';
 
-const SearchForm = () => {
+const SearchForm = ({setSelectedPlantData}) => {
   const history = useHistory();
   const { searchPlant } = usePlantData();
 
-  const [ plants, setPlants ] = useState( [] );
+  const [plants, setPlants] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
-
-  const handleOnSubmit = (name) => {
-    console.log(`name:${name}`);
-    history.push(`/plants?name=${name}`);
+  
+  const handleOnSubmit = (option) => {
+    setSelectedPlantData( option );
+    console.log( option.data );
+    history.push( `/plants?name=${option.name}` );
     setOpen(false);
-    setInputValue( '' );
+    setInputValue('');
   };
 
-  const handleInputChange = async ( e, name, reason ) =>
-  {
-    setInputValue( name );
-    const results = await searchPlant( name );
-    
-    const plantsArray = Array.isArray( results ) ? results : [ results ];
-    const extractedPlants = plantsArray[ 0 ] && plantsArray[ 0 ].plants ? plantsArray[ 0 ].plants : [];
+  const handleInputChange = async (e, name, reason) => {
+    setInputValue(name);
+    const results = await searchPlant(name);
+
+    const plantsArray = Array.isArray(results) ? results : [results];
+    const extractedPlants = plantsArray[0] && plantsArray[0].plants ? plantsArray[0].plants : [];
     let plantsWithId = extractedPlants.map((plant) => {
       return { ...plant, id: uuid() };
     });
     setPlants( plantsWithId );
-    console.log( plantsWithId );
-    setOpen( !!name );
+    setOpen(!!name);
   };
 
-  const filteredOptions = plants.filter(
-    (option) =>
-      option.name && option.name.toLowerCase().includes(inputValue.toLowerCase())
+  const filteredOptions = plants.filter((option) =>
+    option.name && option.name.toLowerCase().includes(inputValue.toLowerCase())
   );
-  
 
   return (
     <Stack sx={{ padding: 2, width: { xs: 200, sm: 400, md: 570 } }}>
@@ -67,7 +63,7 @@ const SearchForm = () => {
               {...props}
               key={option.id}
               onClick={() => {
-                handleOnSubmit(option.name)
+                handleOnSubmit(option);
               }}
             >
               <Typography>

@@ -1,9 +1,6 @@
-import { useParams } from "react-router-dom";
-
-import React, { useEffect, useState } from "react";
-
-import usePlantData from '../hooks/usePlantData';
-
+//PlantCard Component
+import React from "react";
+import Toxicity from "../toxicity/Toxicity";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import {
@@ -18,93 +15,80 @@ import {
   StepConnector
 } from "@mui/material";
 
-import Toxicity from "../toxicity/Toxicity";
-
 import "./PlantCard.css";
 
 
-export default function Plant() {
-  const [plant, setPlant] = useState(null);
-  const params = useParams();
-  const { getPlantData } = usePlantData();
+function PlantCard({ selectedPlantData }) {
 
-  useEffect( () =>
+  console.log(JSON.stringify(selectedPlantData))
+  if ( selectedPlantData )
   {
-    getPlantData(params.plantId)
-    .then((res) => {
-      setPlant(res.data)
-    })
-  }, [params.plantId])
-
-
-  if (plant) {
 
     return (
       <Container sx={{ width: { md: 800 } }}>
         <Box mt={2} />
         <Container sx={{ textAlign: "center" }}>
           <div className="plant-img-container">
-            <img src={plant.image_url} alt={"plant_image"} />
+            <img src={selectedPlantData.image_url} alt={"plant_image"} />
           </div>
 
         </Container>
 
-          <Typography paddingTop={4} variant="h4" margin={2} sx={{ textAlign: "center" }}>
-            {plant.name}
-          </Typography>
-          <Typography
-            variant="subtitle2"
-            margin={2}
-            sx={{ textAlign: "center", color: "text.secondary" }}
+        <Typography paddingTop={4} variant="h4" margin={2} sx={{ textAlign: "center" }}>
+          {selectedPlantData.name}
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          margin={2}
+          sx={{ textAlign: "center", color: "text.secondary" }}
+        >
+          <i>
+            {selectedPlantData.sci_name}
+          </i>
+        </Typography>
+
+        <Accordion
+          elevation={3}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
           >
-            <i>
-              {plant.sci_name}
-            </i>
-          </Typography>
+            <Typography sx={{ width: "33%", flexShrink: 0 }}>
+              Details
+            </Typography>
+            <Typography sx={{ color: "text.secondary" }}>
+              Learn more about this plant
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
 
-          <Accordion
-            elevation={3}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                  Details
-                </Typography>
-                <Typography sx={{ color: "text.secondary" }}>
-                  Learn more about this plant
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
+            <Typography variant="body1" sx={{ color: "text.secondary" }}>
+              Family:
+            </Typography>
+            {selectedPlantData.family} <br /><br />
 
-                <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                  Family:
-                </Typography>
-                {plant.family} <br /><br />
+            <Typography variant="body1" sx={{ color: "text.secondary" }}>
+              Common names:
 
-                <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                  Common names:
+            </Typography>
 
-                </Typography>
-
-                  {plant.common_names}<br /><br />
-                <StepConnector />
-                <br />
-                <Typography sx={{ color: "text.secondary" }}>
-                  Additional Information:
-                  <br />
-                </Typography>
-                <a href={plant.aspca_url} target="_blank" rel="noopener noreferrer">
-                  {plant.aspca_url}
-                </a>
-              </AccordionDetails>
-            </Accordion>
+            {selectedPlantData.common_names}<br /><br />
+            <StepConnector />
+            <br />
+            <Typography sx={{ color: "text.secondary" }}>
+              Additional Information:
+              <br />
+            </Typography>
+            <a href={selectedPlantData.aspca_url} target="_blank" rel="noopener noreferrer">
+              {selectedPlantData.aspca_url}
+            </a>
+          </AccordionDetails>
+        </Accordion>
 
         <Box mb={5} />
         <Paper elevation={4}>
-          <Toxicity toxicities={plant.toxicities} />
-
+          <Toxicity selectedPlantData={selectedPlantData} />
         </Paper>
 
         <Box mb={15} />
@@ -114,11 +98,14 @@ export default function Plant() {
     );
 
   }
-
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <CircularProgress />
-    </Box>
-  )
-
+  else
+  {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 }
+
+export default PlantCard;

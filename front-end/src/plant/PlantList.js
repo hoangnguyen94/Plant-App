@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+//PlantList component
+import React, { useState, useEffect } from "react";
 
 import PlantApi from "../api/api";
 import PlantCardList from "./PlantCardList";
@@ -21,17 +22,24 @@ function PlantList() {
   const [plants, setPlants] = useState(null);
 
   /** Triggered by search form submit; reloads plants. */
-  async function search() {
-    let plants = await PlantApi.getPlants();
-    setPlants( plants );
-    console.log(`plants: ${plants}`)
-  }
-  search();
+  useEffect( () =>
+  {
+    async function fetchPlants ()
+    {
+      let plants = await PlantApi.getPlants();
+      setPlants( plants );
+      console.log( `fetching: ${plants}` )
+    }
+
+    fetchPlants();
+  }, [] );
+  
+  
   if (!plants) return <LoadingSpinner />;
   
   return (
       <div className="PlantList col-md-8 offset-md-2">
-        <SearchForm searchFor={search} />
+        <SearchForm searchFor={plants} />
         {plants.length
             ? <PlantCardList plants={plants} />
             : <p className="lead">Sorry, no results were found!</p>

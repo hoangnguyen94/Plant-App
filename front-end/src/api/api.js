@@ -24,7 +24,10 @@ class PlantApi {
     const params = (method === "get")
         ? data
         : {};
-
+    if (PlantApi.token) {
+      headers.Authorization = `Bearer ${PlantApi.token}`;
+    }
+    
     try {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
@@ -75,11 +78,11 @@ class PlantApi {
   static async getPlants ()
   {
     console.log( "im call" )
-    let res = await this.request(`plants`);
+    let res = await this.request( `plants` );
+    console.log(res)
     return res.plants;
   }
 
-  // obviously, you'll add a lot here ...
 }
 
 // for now, put token ("testadmin" / "password" on class)
