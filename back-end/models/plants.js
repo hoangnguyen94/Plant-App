@@ -63,14 +63,17 @@ class Plant
         return data;
     };
 
-    static async searchNameAndToxicity ( name )
+    static async searchNameAndToxicity ( term )
     {
+        console.log("what is search")
         const plantAndToxicityRes = await db.query(
           `SELECT 
             plants.id, 
             plants.name, 
             plants.sci_name,
             plants.common_names,
+            plants.family,
+            plants.image_url,
             toxicity.animal, 
             toxicity.toxic, 
             toxicity.clinical_signs
@@ -80,21 +83,21 @@ class Plant
             OR lower(common_names) LIKE '%' || $1 || '%'
             OR lower(name) LIKE '%' || $1 || '%'
         LIMIT 9;`,
-          [name.toLowerCase()]
+          [term]
         );
-           
+        console.log( plantAndToxicityRes );
         if (!plantAndToxicityRes) {
-          throw new NotFoundError(`No plant and toxicity: ${name}`);
+          throw new NotFoundError(`No plant and toxicity: ${term}`);
         }
         
         const plantAndToxicityDetails = plantAndToxicityRes.rows;
       
         const combinedData = plantAndToxicityDetails.reduce((result, current) => {
-            const { name, sci_name, common_names, animal, toxic, clinical_signs } = current;
-            const key = `${name}-${sci_name}-${common_names}-${clinical_signs}`;
+            const { name, sci_name, common_names, family, image_url, animal, toxic, clinical_signs } = current;
+            const key = `${name}-${sci_name}-${common_names}-${family}-${image_url}-${clinical_signs}`;
           
             if (!result[key]) {
-              result[key] = { name, sci_name,common_names, animals: [], clinical_signs };
+              result[key] = { name, sci_name,common_names, family, image_url, animals: [], clinical_signs };
             }
           
             result[key].animals.push({ animal, toxic });

@@ -1,4 +1,3 @@
-const jsonschema = require( "jsonschema" );
 
 const express = require('express');
 const router = express.Router();
@@ -9,17 +8,26 @@ const Plant = require( "../models/plants" );
    
    * Returns [{ id, sci_name, common_names, family, image_url, aspca_url}, ...]
    * */
-router.get( "/", async function ( req, res, next )
-{
-  try
-  {
-    const plants = await Plant.findAll();
-    return res.json( { plants } );
-  } catch ( err )
-  {
-    return next( err );
+
+ router.get("/", async function (req, res, next) {
+  try {
+    const { name } = req.query; // Retrieve the name query parameter
+
+    let plants;
+
+    if (name) {
+      // If name is provided, filter the plants based on the name
+      plants = await Plant.searchNameAndToxicity(name);
+    } else {
+      // If name is not provided, retrieve all plants
+      plants = await Plant.findAll();
+    }
+
+    return res.json({ plants });
+  } catch (err) {
+    return next(err);
   }
-} );
+ } );
 
  /** Given a plant id, return data about plant.
    *
@@ -44,41 +52,6 @@ router.get( "/:id", async function ( req, res, next )
   }
 } );
 
-router.post( "/name/search",
-  ensureLoggedIn,
-  async function ( req, res, next )
-  {
-    try
-    {
-      const plant_details =
-        await Plant.searchName( `%${req.body.term.toLowerCase()}%` );
-
-      return res.json( { plant_details } );
-    } catch ( err )
-    {
-      return next( err );
-    }
-  } );
-  
-router.post( "/toxicity/search",
-  ensureLoggedIn,
-  async function ( req, res, next )
-  {
-    try
-    {
-      const toxicity_details =
-        await Plant.searchToxicity( `%${req.body.term.toLowerCase()}%` );
-      
-      return res.json( { toxicity_details } );
-    } catch ( err )
-    {
-      return next( err );
-    }
-  } )
-
 
 module.exports = router;
 
-
-
-  

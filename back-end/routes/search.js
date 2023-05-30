@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {ensureLoggedIn} = require( "../middleware/auth" );
+// const {ensureLoggedIn} = require( "../middleware/auth" );
 const Plant = require( "../models/plants" );
 
-/** Given a plant id, return data about plant.
+/** Given a plant name, return data about plant.
    *
    * plant: { id, name, sci_name, common_name, family, aspca_url, image_url}
    * Where plant.id = plant_id   
@@ -13,12 +13,12 @@ const Plant = require( "../models/plants" );
    * Authorization required: none
    **/
   
-router.get( "/", ensureLoggedIn, async function ( req, res, next )
+router.get( "/:term",  async function ( req, res, next )
 {
   try
   {
     const searchResults =
-      await Plant.searchNameAndToxicity( req.query.name );
+      await Plant.searchNameAndToxicity( req.query.term );
     
     res.json(searchResults);
   } catch (err) {
