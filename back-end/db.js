@@ -17,5 +17,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+db.connect();
 
 module.exports = db;

@@ -5,13 +5,13 @@ const User = require( '../models/user' );
 const db = require("../db");
 const { commonBeforeEach, commonAfterEach, commonAfterAll } = require( "./testcase" );
 
-db.connect();
 
 async function commonBeforeAll ()
-{
+{	
+	
 	// noinspection SqlWithoutWhere
 	await db.query( "DELETE FROM users" );
-  
+	
 	await User.register( {
 		username: "u1",
 		password: "password1",
@@ -42,8 +42,8 @@ async function commonBeforeAll ()
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
-afterAll(commonAfterAll);
-  
+afterAll( commonAfterAll );
+
 const u1Token = createToken({ username: "u1", isAdmin: false });
 const u2Token = createToken({ username: "u2", isAdmin: false });
 const adminToken = createToken({ username: "admin", isAdmin: true });

@@ -3,7 +3,10 @@ const app = require('../app');
 const User = require('../models/user');
 const { createToken } = require('../helpers/tokens');
 const jsonschema = require( 'jsonschema' );
+const db = require( "../db" );
 
+
+db.end();
 jest.mock('../models/user');
 
 // Mock the User.authenticate method
@@ -141,5 +144,3 @@ describe('POST /auth/register', () => {
     });
 } );
 });
-
-
