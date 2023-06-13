@@ -97,12 +97,18 @@ function ProfileForm() {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label>Username</label>
-                <p className="form-control-plaintext">{formData.username}</p>
+                <label htmlFor="username">Username</label>
+                <input
+                id="username"
+                className="form-control-plaintext"
+                value={formData.username}
+                readOnly
+                />
               </div>
               <div className="form-group">
-                <label>First Name</label>
+                <label htmlFor="firstName">First Name</label>
                 <input
+                    id="firstName"
                     name="firstName"
                     className="form-control"
                     value={formData.firstName}
@@ -110,8 +116,9 @@ function ProfileForm() {
                 />
               </div>
               <div className="form-group">
-                <label>Last Name</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input
+                    id="lastName"
                     name="lastName"
                     className="form-control"
                     value={formData.lastName}
@@ -119,8 +126,9 @@ function ProfileForm() {
                 />
               </div>
               <div className="form-group">
-                <label>Email</label>
-                <input
+                <label htmlFor="email">Email</label>
+              <input
+                    id="email"
                     name="email"
                     className="form-control"
                     value={formData.email}
@@ -128,8 +136,9 @@ function ProfileForm() {
                 />
               </div>
               <div className="form-group">
-                <label>Confirm password to make changes:</label>
-                <input
+                <label htmlFor="password">Confirm password to make changes:</label>
+                  <input
+                    id="password"
                     type="password"
                     name="password"
                     className="form-control"

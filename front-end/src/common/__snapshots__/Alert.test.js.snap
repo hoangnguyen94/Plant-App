@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert component renders the alert component with a different type 1`] = `
+<div
+  class="alert alert-warning"
+  role="alert"
+>
+  <p
+    class="mb-0 small"
+  >
+    Warning
+  </p>
+</div>
+`;
+
+exports[`Alert component renders the alert component with messages 1`] = `
+<div
+  class="alert alert-danger"
+  role="alert"
+>
+  <p
+    class="mb-0 small"
+  >
+    Error 1
+  </p>
+  <p
+    class="mb-0 small"
+  >
+    Error 2
+  </p>
+</div>
+`;
+
+exports[`Alert component renders the alert component with multiple messages 1`] = `
+<div
+  class="alert alert-info"
+  role="alert"
+>
+  <p
+    class="mb-0 small"
+  >
+    Message 1
+  </p>
+  <p
+    class="mb-0 small"
+  >
+    Message 2
+  </p>
+  <p
+    class="mb-0 small"
+  >
+    Message 3
+  </p>
+</div>
+`;
+
+exports[`Alert component renders the alert component without messages 1`] = `
+<div
+  class="alert alert-danger"
+  role="alert"
+/>
+`;

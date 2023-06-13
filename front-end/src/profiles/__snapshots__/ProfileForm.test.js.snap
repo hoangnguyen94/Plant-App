@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileForm handles form submission and updates user information 1`] = `
+<div
+  class="col-md-6 col-lg-4 offset-md-3 offset-lg-4"
+>
+  <h3>
+    Profile
+  </h3>
+  <div
+    class="card"
+  >
+    <div
+      class="card-body"
+    >
+      <form>
+        <div
+          class="form-group"
+        >
+          <label
+            for="username"
+          >
+            Username
+          </label>
+          <input
+            class="form-control-plaintext"
+            id="username"
+            readonly=""
+            value="testuser"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="firstName"
+          >
+            First Name
+          </label>
+          <input
+            class="form-control"
+            id="firstName"
+            name="firstName"
+            value="Updated First Name"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="lastName"
+          >
+            Last Name
+          </label>
+          <input
+            class="form-control"
+            id="lastName"
+            name="lastName"
+            value="Updated Last Name"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="email"
+          >
+            Email
+          </label>
+          <input
+            class="form-control"
+            id="email"
+            name="email"
+            value="updated@example.com"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="password"
+          >
+            Confirm password to make changes:
+          </label>
+          <input
+            class="form-control"
+            id="password"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+        <div
+          class="alert alert-success"
+          role="alert"
+        >
+          <p
+            class="mb-0 small"
+          >
+            Updated successfully.
+          </p>
+        </div>
+        <button
+          class="btn btn-primary btn-block mt-4"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ProfileForm renders profile form with initial values 1`] = `
+<div
+  class="col-md-6 col-lg-4 offset-md-3 offset-lg-4"
+>
+  <h3>
+    Profile
+  </h3>
+  <div
+    class="card"
+  >
+    <div
+      class="card-body"
+    >
+      <form>
+        <div
+          class="form-group"
+        >
+          <label
+            for="username"
+          >
+            Username
+          </label>
+          <input
+            class="form-control-plaintext"
+            id="username"
+            readonly=""
+            value="testuser"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="firstName"
+          >
+            First Name
+          </label>
+          <input
+            class="form-control"
+            id="firstName"
+            name="firstName"
+            value="Test"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="lastName"
+          >
+            Last Name
+          </label>
+          <input
+            class="form-control"
+            id="lastName"
+            name="lastName"
+            value="Tester"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="email"
+          >
+            Email
+          </label>
+          <input
+            class="form-control"
+            id="email"
+            name="email"
+            value="test@example.com"
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            for="password"
+          >
+            Confirm password to make changes:
+          </label>
+          <input
+            class="form-control"
+            id="password"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+        <button
+          class="btn btn-primary btn-block mt-4"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

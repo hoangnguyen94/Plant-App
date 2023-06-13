@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingSpinner component renders the loading spinner component 1`] = `
+<div
+  class="LoadingSpinner"
+>
+  Loading ...
+</div>
+`;

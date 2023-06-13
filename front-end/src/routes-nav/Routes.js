@@ -1,12 +1,11 @@
 //Route Component
-import React from "react";
+import * as React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../profiles/ProfileForm";
 import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
-// import SearchForm from "../hooks/SearchForm";
 import PlantCard from "../plant/PlantCard";
 
 
@@ -24,7 +23,7 @@ function Routes({ login, signup, selectedPlantData }) {
       `login=${typeof login}`,
       `signup=${typeof signup}`,
   );
-  console.log( "route", selectedPlantData );
+
   return (
     <div className="pt-5">
       <Switch>

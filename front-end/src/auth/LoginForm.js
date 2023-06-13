@@ -38,7 +38,6 @@ const LoginForm = ( { login } ) =>
         evt.preventDefault();
         let result = await login( formData );
         if (result.success) {
-            console.log( "sign in" );
             history.push( "/" );
         } else {
             setFormErrors( result.errors );
@@ -60,8 +59,9 @@ const LoginForm = ( { login } ) =>
                     <div className="card-body">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label>Username</label>
+                                <label htmlFor="username">Username</label>
                                 <input
+                                    id="username"
                                     name="username"
                                     className="form-control"
                                     value={formData.username}
@@ -71,8 +71,9 @@ const LoginForm = ( { login } ) =>
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Password</label>
+                                <label htmlFor="password">Password</label>
                                 <input
+                                    id="password"
                                     type="password"
                                     name="password"
                                     className="form-control"
@@ -89,6 +90,7 @@ const LoginForm = ( { login } ) =>
 
                             <button
                                 className="btn btn-primary float-right"
+                                type="submit"
                                 onSubmit={handleSubmit}
                             >
                                 Submit

@@ -3,8 +3,7 @@ import React, { useContext} from "react";
 import { Link, NavLink } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 import "./Navigation.css";
-import SearchForm from "../hooks/SearchForm"
-// import PlantApi from "../api/api";
+import SearchForm from "../hooks/SearchForm";
 /** Navigation bar for site. Shows up on every page.
  *
  * When user is logged in, shows links to main areas of site. When not,
