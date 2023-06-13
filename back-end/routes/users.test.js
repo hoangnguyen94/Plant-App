@@ -2,8 +2,9 @@ const request = require('supertest');
 const app = require( '../app' );
 const { createToken } = require( '../helpers/tokens' );
 const User = require( '../models/user' );
-const db = require("../db.js");
-const {commonBeforeEach, commonAfterEach, commonAfterAll } = require( "./testcase" );
+const db = require("../db");
+const { commonBeforeEach, commonAfterEach, commonAfterAll } = require( "./testcase" );
+
 db.connect();
 
 async function commonBeforeAll ()
@@ -222,7 +223,6 @@ describe("POST /users", function () {
 			user: {
 				username: "u1",
 				firstName: "U1F",
-				id: expect.any( Number ),
 				lastName: "U1L",
 				email: "user1@user.com",
 				isAdmin: false
@@ -239,7 +239,6 @@ describe("POST /users", function () {
 		  username: "u1",
 		  firstName: "U1F",
 			  lastName: "U1L",
-			  id: expect.any( Number ),
 		  email: "user1@user.com",
 		  isAdmin: false
 		}

@@ -14,18 +14,19 @@ const Plant = require( "../models/plants" );
     const { name } = req.query; // Retrieve the name query parameter
 
     let plants;
-
+    
     if (name) {
       // If name is provided, filter the plants based on the name
-      plants = await Plant.searchNameAndToxicity(name);
+      plants = await Plant.searchNameAndToxicity( name );
     } else {
       // If name is not provided, retrieve all plants
       plants = await Plant.findAll();
     }
-
+    
     return res.json({ plants });
   } catch (err) {
-    return next(err);
+    
+    return next( err );
   }
  } );
 

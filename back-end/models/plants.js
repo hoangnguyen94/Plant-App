@@ -65,7 +65,6 @@ class Plant
 
     static async searchNameAndToxicity ( term )
     {
-        console.log("what is search")
         const plantAndToxicityRes = await db.query(
           `SELECT 
             plants.id, 

@@ -8,7 +8,8 @@ const router = new express.Router();
 const { createToken } = require("../helpers/tokens");
 const userAuthSchema = require("../schemas/userAuth.json");
 const userRegisterSchema = require("../schemas/userRegister.json");
-const { BadRequestError } = require("../expressError");
+const { BadRequestError, UnauthorizedError } = require("../expressError");
+const { STATUS_CODES } = require( "http" );
 
 /** POST /auth/token:  { username, password } => { token }
  *
@@ -23,12 +24,16 @@ router.post("/token", async function (req, res, next) {
     const validator = jsonschema.validate( req.body, userAuthSchema );
     if (!validator.valid) {
       const errs = validator.errors.map( e => e.stack );
-      console.log(errs)
       throw new BadRequestError( errs );
     }
     
     const { username, password } = req.body;
     const user = await User.authenticate( username, password );
+    if ( !user )
+    {
+      throw new UnauthorizedError("Invalid username/password");
+    }
+
     const token = createToken( user );
     return res.json({ token });
   } catch (err) {

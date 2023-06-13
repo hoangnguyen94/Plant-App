@@ -51,7 +51,7 @@ describe('Authentication Routes', () => {
     it('should return a BadRequestError when invalid data is provided', async () => {
       const validationErrors = [
         {
-          stack: 'Invalid username',
+          stack: 'Invalid username'
         },
       ];
       jsonschema.validate.mockReturnValue({ valid: false, errors: validationErrors });
@@ -61,8 +61,7 @@ describe('Authentication Routes', () => {
         .send({
           username: '',
           password: 'testpassword',
-        });
-
+        } );
       expect(response.statusCode).toBe(400);
       expect(response.body).toEqual({
         error: {

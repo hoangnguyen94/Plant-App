@@ -9,9 +9,9 @@ const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
 const plantsRoutes = require( "./routes/plants" );
-const searchRoutes = require( "./routes/search" );
 const morgan = require("morgan");
-const router = require( "./routes/auth" );
+const db = require( "./db" );
+
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.use(authenticateJWT);
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use( "/plants", plantsRoutes );
-app.use( "/search", searchRoutes );
+
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
@@ -39,6 +39,11 @@ app.use(function (err, req, res, next) {
   return res.status(status).json({
     error: { message, status },
   });
-});
+} );
 
+// Close the database connection gracefully when the application is terminated
+process.on("SIGINT", async () => {
+  await db.end();
+  process.exit(0);
+});
 module.exports = app;
